@@ -6,10 +6,60 @@
   "toolbar": [
     {
       "type": "button",
-      "actionType": "link",
-      "link": "/crud/new",
+      "actionType": "dialog",
       "label": "新增",
-      "primary": true
+      "icon": "fa fa-plus pull-left",
+      "primary": true,
+      "dialog": {
+        "title": "新增",
+        "body": {
+          "type": "form",
+          "name": "sample-edit-form",
+          "api": "post:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample",
+          "body": [
+            {
+              "type": "input-text",
+              "name": "engine",
+              "label": "Engine",
+              "required": true
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "input-text",
+              "name": "browser",
+              "label": "Browser",
+              "required": true
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "input-text",
+              "name": "platform",
+              "label": "Platform(s)",
+              "required": true
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "input-text",
+              "name": "version",
+              "label": "Engine version"
+            },
+            {
+              "type": "divider"
+            },
+            {
+              "type": "input-text",
+              "name": "grade",
+              "label": "CSS grade"
+            }
+          ]
+        }
+      }
     }
   ],
   "body": [
@@ -18,14 +68,14 @@
       "name": "sample",
       "api": {
         "method": "post",
-        "url": "${ADMIN_BASE_URL}/admin/common/query",
+        "url": "${ADMIN_API_BASEURL}/common/query",
         "data": {
-            "table_name": "sys_user",
-            "page": {
-                "offset": "${(page - 1) * perPage}",
-                "limit": 10,
-                "query_count": true
-            }
+          "table_name": "sys_user",
+          "page": {
+            "offset": "${(page - 1) * perPage}",
+            "limit": 10,
+            "query_count": true
+          }
         }
       },
       "filter": {
@@ -50,27 +100,6 @@
       },
       "bulkActions": [
         {
-          "label": "批量修改",
-          "type": "button",
-          "actionType": "dialog",
-          "level": "primary",
-          "dialog": {
-            "title": "批量编辑",
-            "name": "sample-bulk-edit",
-            "body": {
-              "type": "form",
-              "api": "${API_HOST}/api/amis-mock/sample/bulkUpdate2",
-              "controls": [
-                {
-                  "type": "text",
-                  "name": "engine",
-                  "label": "Engine"
-                }
-              ]
-            }
-          }
-        },
-        {
           "label": "批量删除",
           "type": "button",
           "level": "danger",
@@ -81,69 +110,173 @@
       ],
       "columns": [
         {
-          "name": "engine",
-          "label": "Rendering engine",
-          "sortable": true
-        },
-        {
           "name": "id",
           "label": "ID",
           "width": 20,
           "sortable": true
         },
         {
-          "name": "browser",
-          "label": "Browser",
-          "sortable": true
+          "name": "username",
+          "label": "用户名"
         },
         {
-          "name": "platform",
-          "label": "Platform(s)",
-          "sortable": true
+          "name": "email",
+          "label": "邮箱"
         },
         {
-          "name": "version",
-          "label": "Engine version"
+          "name": "nickname",
+          "label": "昵称"
         },
         {
-          "name": "grade",
-          "label": "CSS grade"
+          "name": "status",
+          "label": "状态"
+        },
+        {
+          "name": "ctime",
+          "label": "创建时间",
+          "tpl": "${ctime | date:YYYY-MM-DD hh\\:mm\\:ss:x}"
         },
         {
           "type": "operation",
           "label": "操作",
-          "width": "",
+          "width": 100,
           "buttons": [
             {
-              "type": "button-group",
-              "buttons": [
-                {
-                  "type": "button",
-                  "label": "查看",
-                  "level": "primary",
-                  "actionType": "link",
-                  "link": "/crud/${id}"
-                },
-                {
-                  "type": "button",
-                  "label": "修改",
-                  "level": "info",
-                  "actionType": "link",
-                  "link": "/crud/${id}/edit"
-                },
-                {
-                  "type": "button",
-                  "label": "删除",
-                  "level": "danger",
-                  "actionType": "ajax",
-                  "confirmText": "您确认要删除?",
-                  "api": "delete:${API_HOST}/api/amis-mock/sample/$id"
+              "type": "button",
+              "icon": "fa fa-eye",
+              "actionType": "dialog",
+              "tooltip": "查看",
+              "dialog": {
+                "title": "查看",
+                "body": {
+                  "type": "form",
+                  "body": [
+                    {
+                      "type": "static",
+                      "name": "engine",
+                      "label": "Engine"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "static",
+                      "name": "browser",
+                      "label": "Browser"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "static",
+                      "name": "platform",
+                      "label": "Platform(s)"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "static",
+                      "name": "version",
+                      "label": "Engine version"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "static",
+                      "name": "grade",
+                      "label": "CSS grade"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "html",
+                      "html": "<p>添加其他 <span>Html 片段</span> 需要支持变量替换（todo）.</p>"
+                    }
+                  ]
                 }
-              ]
+              }
+            },
+            {
+              "type": "button",
+              "icon": "fa fa-pencil",
+              "tooltip": "编辑",
+              "actionType": "drawer",
+              "drawer": {
+                "position": "left",
+                "size": "lg",
+                "title": "编辑",
+                "body": {
+                  "type": "form",
+                  "name": "sample-edit-form",
+                  "data": {
+                    "env": "test"
+                  },
+                  "api": {
+                    "method": "post",
+                    "url": "https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id",
+                    "messages": {
+                      "success": "成功了-${env}"
+                    }
+                  },
+                  "body": [
+                    {
+                      "type": "input-text",
+                      "name": "engine",
+                      "label": "Engine",
+                      "required": true
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "browser",
+                      "label": "Browser",
+                      "required": true
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "platform",
+                      "label": "Platform(s)",
+                      "required": true
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "input-text",
+                      "name": "version",
+                      "label": "Engine version"
+                    },
+                    {
+                      "type": "divider"
+                    },
+                    {
+                      "type": "select",
+                      "name": "grade",
+                      "label": "CSS grade",
+                      "options": ["A", "B", "C", "D", "X"]
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "button",
+              "icon": "fa fa-times text-danger",
+              "actionType": "ajax",
+              "tooltip": "删除",
+              "confirmText": "您确认要删除?",
+              "api": "delete:https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com/api/amis-mock/sample/$id"
             }
           ],
-          "placeholder": "-",
-          "fixed": "right"
+          "toggled": true
         }
       ],
       "affixHeader": true,
