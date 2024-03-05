@@ -43,7 +43,7 @@ export const getCache = (key: string, createFun: Function) => {
 
 export const setCache = (key: string, data: any, expire: number = 0) => {
   if (!expire || expire < 0) {
-    expire = 1000 * 60 * 60 * 24 * 365
+    expire = 1000 * 60 * 60 * 24 * 30
   }
   const dw: DataWrap = {
     data,

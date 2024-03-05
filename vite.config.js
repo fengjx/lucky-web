@@ -6,7 +6,6 @@ export default defineConfig({
     port: 3001,
   },
   build: {
-    outDir: '../ui',
     rollupOptions: {
       input: {
         index: path.resolve(__dirname, 'index.html'),

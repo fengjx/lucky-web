@@ -14,27 +14,22 @@ const app = {
     {
       label: 'Home',
       url: '/',
-      redirect: '/index/1',
+      redirect: '/sys/user',
     },
     {
-      label: '系统',
+      label: '功能',
       children: [
         {
-          label: '页面A',
-          url: 'index',
-          schema: {
-            type: 'page',
-            title: '页面A',
-            body: '页面A',
-          },
+          label: '系统管理',
+          url: '/sys',
           children: [
             {
               label: '用户管理',
-              url: 'sys_user',
-              schemaApi: 'get:/pages/sys/user/index.json',
+              url: 'user',
+              schemaApi: `get:${appConfig.pageURL}/sys/user/index.json`,
             },
             {
-              label: '页面A-2',
+              label: '菜单管理',
               url: '2',
               schema: {
                 type: 'page',
@@ -43,7 +38,7 @@ const app = {
               },
             },
             {
-              label: '页面A-3',
+              label: '字典管理',
               url: '3',
               schema: {
                 type: 'page',
@@ -53,6 +48,11 @@ const app = {
             },
           ],
         },
+      ],
+    },
+    {
+      label: '设置',
+      children: [
         {
           label: '列表示例',
           url: '/crud',
@@ -88,18 +88,7 @@ const app = {
   ],
 }
 
-let amisInstance = createAmis('#root', app, {
-  location: appHistory.location,
-  data: {
-    // 全局数据，是受控的数据
-  },
-  context: {
-    // 全局上下文数据, 非受控的数据，无论哪一层都能获取到，包括弹窗自定义数据映射后都能获取到。
-    // 可以用来放一下全局配置等。比如 API_HOST, 这样页面配置里面可以通过 ${API_HOST} 来获取到。
-    API_HOST: 'https://3xsw4ap8wah59.cfc-execute.bj.baidubce.com',
-    ADMIN_BASE_URL: 'http://127.0.0.1:8080',
-  },
-})
+let amisInstance = createAmis('#root', app, {})
 
 appHistory.listen((state) => {
   amisInstance.updateProps({
