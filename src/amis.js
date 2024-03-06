@@ -6,7 +6,7 @@ import './assets/css/base.css'
 
 import 'amis/sdk/sdk.js'
 
-import { ACCESS_TOKEN, getCache } from './assets/lib/cache'
+import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
 import { createHashHistory } from 'history'
 
 const apiBaseURL = import.meta.env.VITE_API_BASEURL
@@ -112,11 +112,11 @@ window.createAmis = (container, schemaJSON, props) => {
       ) {
         // 目标地址和当前地址一样，不处理，免得重复刷新
         return
-      } else if (/^https?\:\/\//.test(location) || !history) {
+      } else if (/^https?\:\/\//.test(location) || !appHistory) {
         return (window.location.href = location)
       }
 
-      history[replace ? 'replace' : 'push'](location)
+      appHistory[replace ? 'replace' : 'push'](location)
     },
     jumpTo: (to, action) => {
       if (to === 'goBack') {
@@ -152,16 +152,24 @@ window.createAmis = (container, schemaJSON, props) => {
       }
     },
     isCurrentUrl: isCurrentUrl,
-    requestAdaptor: async (config) => {
-      console.log('requestAdaptor', config)
-      const headers = config.headers || {}
+    requestAdaptor: async (api, context) => {
+      const headers = api.headers || {}
       headers['app'] = 'lca-ui'
       const token = getCache(ACCESS_TOKEN)
       if (token) {
         headers['X-Token'] = token
       }
-      config.headers = headers
-      return config
+      api.headers = headers
+      return api
+    },
+    responseAdaptor: (api, payload, query, request, response) => {
+      const headers = response.headers
+      if (headers && headers['x-refresh-token']) {
+        const token = headers['x-refresh-token']
+        console.log('refresh token', token)
+        setCache(ACCESS_TOKEN, token)
+      }
+      return payload
     },
     theme: 'antd',
   })
