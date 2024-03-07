@@ -40,6 +40,7 @@ import { ACCESS_TOKEN, setCache, getCache } from './assets/lib/cache'
         {
           type: 'submit',
           label: '登录',
+          level: 'primary',
         },
       ],
     },
