@@ -5,15 +5,42 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
   if (!getCache(ACCESS_TOKEN)) {
     window.location = '/login'
   }
+
   const app = {
     type: 'app',
     brandName: 'LuchenAdmin',
     logo: '/logo.png',
     header: {
-      type: 'tpl',
-      inline: false,
-      className: 'w-full',
-      tpl: '<div class="flex justify-between"><div>顶部区域左侧</div><div>顶部区域右侧</div></div>',
+      type: 'grid',
+      columns: [
+        {
+          md: 0,
+        },
+        {
+          md: 9,
+          body: [
+            {
+              label: '退出登录',
+              type: 'button',
+              className: 'header-right',
+              actionType: 'dialog',
+              dialog: {
+                title: '确认退出登录？',
+                onEvent: {
+                  confirm: {
+                    actions: [
+                      {
+                        actionType: 'custom',
+                        script: 'logout()',
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
+      ],
     },
     pages: [
       {
@@ -44,12 +71,13 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
               },
               {
                 label: '字典管理',
-                url: '3',
-                schema: {
-                  type: 'page',
-                  title: '页面A-3',
-                  body: '页面A-3',
-                },
+                url: 'dict',
+                schemaApi: `get:${appConfig.pageURL}/sys/dict/index.json`,
+              },
+              {
+                label: '配置管理',
+                url: 'config',
+                schemaApi: `get:${appConfig.pageURL}/sys/config/index.json`,
               },
             ],
           },

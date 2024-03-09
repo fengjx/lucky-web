@@ -15,27 +15,27 @@ import { ACCESS_TOKEN, setCache, getCache } from './assets/lib/cache'
       api: {
         method: 'post',
         url: `${appConfig.apiBaseURL}/api/login`,
-        adaptor: function (payload, response) {
-          console.log('login payload', payload, response)
-          if (!payload.status || payload.status === 0) {
-            if (payload.data?.token) {
-              setCache(ACCESS_TOKEN, payload.data.token)
-              window.location = '/'
-            }
-          }
-          return payload
-        },
+      },
+      onFinished: (values) => {
+        console.log('login res', values)
+        if (values.token) {
+          setCache(ACCESS_TOKEN, values.token)
+          window.location = '/'
+        }
+        return false // 这样可以禁掉 amis 后续的默认行为
       },
       body: [
         {
           label: '用户名',
           type: 'input-text',
           name: 'username',
+          required: true,
         },
         {
           label: '密码',
           type: 'input-password',
           name: 'password',
+          required: true,
         },
         {
           type: 'submit',

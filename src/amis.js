@@ -176,6 +176,13 @@ window.createAmis = (container, schemaJSON, props) => {
   return amisInstance
 }
 
+const logout = () => {
+  setCache(ACCESS_TOKEN, null)
+  window.location = '/login'
+}
+
 window.appHistory = appHistory
 
 window.appConfig = appConfig
+
+window.logout = logout
