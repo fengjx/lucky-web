@@ -49,11 +49,12 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
         redirect: '/sys/user',
       },
       {
-        label: '功能',
+        label: '系统',
         children: [
           {
             label: '系统管理',
             url: '/sys',
+            icon: 'fa fa-wrench',
             children: [
               {
                 label: '用户管理',
@@ -62,12 +63,8 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
               },
               {
                 label: '菜单管理',
-                url: '2',
-                schema: {
-                  type: 'page',
-                  title: '页面A-2',
-                  body: '页面A-2',
-                },
+                url: 'menu',
+                schemaApi: `get:${appConfig.pageURL}/sys/menu/index.json`,
               },
               {
                 label: '字典管理',
@@ -81,38 +78,16 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
               },
             ],
           },
-        ],
-      },
-      {
-        label: '设置',
-        children: [
           {
-            label: '列表示例',
-            url: '/crud',
-            rewrite: '/crud/list',
-            icon: 'fa fa-cube',
+            label: '设置',
+            url: '/settings',
+            icon: 'fa fa-server',
+            redirect: '/settings/service',
             children: [
               {
-                label: '列表',
-                url: '/crud/list',
-                icon: 'fa fa-list',
+                label: '服务配置',
+                url: 'service',
                 schemaApi: 'get:/pages/crud-list.json',
-              },
-              {
-                label: '新增',
-                url: '/crud/new',
-                icon: 'fa fa-plus',
-                schemaApi: 'get:/pages/crud-new.json',
-              },
-              {
-                label: '查看',
-                url: '/crud/:id',
-                schemaApi: 'get:/pages/crud-view.json',
-              },
-              {
-                label: '修改',
-                url: '/crud/:id/edit',
-                schemaApi: 'get:/pages/crud-edit.json',
               },
             ],
           },
