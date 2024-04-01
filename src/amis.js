@@ -6,16 +6,8 @@ import './assets/css/base.css'
 
 import 'amis/sdk/sdk.js'
 
-import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
+import { getToken, setToken, logout, appConfig } from './assets/lib/kit'
 import { createHashHistory } from 'history'
-
-const apiBaseURL = import.meta.env.VITE_API_BASEURL
-const pageURL = import.meta.env.VITE_PAGE_BASEURL
-
-const appConfig = {
-  apiBaseURL,
-  pageURL,
-}
 
 // 如果想用 browserHistory 请切换下这处代码, 其他不用变
 // const history = History.createBrowserHistory();
@@ -88,10 +80,22 @@ window.createAmis = (container, schemaJSON, props) => {
     location: appHistory.location,
     data: {
       // 全局数据，是受控的数据
+      options: {
+        user: [
+          {
+            label: '正常',
+            value: 'normal',
+          },
+          {
+            label: '封禁',
+            value: 'disable',
+          },
+        ],
+      },
     },
     context: {
-      API_BASEURL: apiBaseURL,
-      PAGE_URL: pageURL,
+      API_BASEURL: appConfig.apiBaseURL,
+      PAGE_URL: appConfig.pageURL,
     },
   }
   const targetProps = Object.assign(defaultProps, props)
@@ -155,7 +159,7 @@ window.createAmis = (container, schemaJSON, props) => {
     requestAdaptor: async (api, context) => {
       const headers = api.headers || {}
       headers['app'] = 'lca-ui'
-      const token = getCache(ACCESS_TOKEN)
+      const token = getToken()
       if (token) {
         headers['X-Token'] = token
       }
@@ -167,7 +171,7 @@ window.createAmis = (container, schemaJSON, props) => {
       if (headers && headers['x-refresh-token']) {
         const token = headers['x-refresh-token']
         console.log('refresh token', token)
-        setCache(ACCESS_TOKEN, token)
+        setToken(token)
       }
       return payload
     },
@@ -176,13 +180,10 @@ window.createAmis = (container, schemaJSON, props) => {
   return amisInstance
 }
 
-const logout = () => {
-  setCache(ACCESS_TOKEN, null)
-  window.location = '/login'
-}
-
 window.appHistory = appHistory
 
 window.appConfig = appConfig
 
 window.logout = logout
+
+window.getToken = getToken

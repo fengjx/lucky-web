@@ -1,8 +1,6 @@
 import './amis'
-
-import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
 ;(() => {
-  if (!getCache(ACCESS_TOKEN)) {
+  if (!getToken()) {
     window.location = '/login'
   }
 
@@ -15,6 +13,7 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
       columns: [
         {
           md: 0,
+          body: [],
         },
         {
           md: 9,
@@ -87,7 +86,7 @@ import { ACCESS_TOKEN, getCache, setCache } from './assets/lib/cache'
               {
                 label: '服务配置',
                 url: 'service',
-                schemaApi: 'get:/pages/crud-list.json',
+                schemaApi: 'get:/pages/settings.json',
               },
             ],
           },

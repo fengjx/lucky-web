@@ -1,8 +1,7 @@
 import './amis'
-
-import { ACCESS_TOKEN, setCache, getCache } from './assets/lib/cache'
+import { getToken, setToken } from './assets/lib/kit'
 ;(() => {
-  if (getCache(ACCESS_TOKEN)) {
+  if (getToken()) {
     window.location = '/'
   }
   let amisJSON = {
@@ -19,7 +18,7 @@ import { ACCESS_TOKEN, setCache, getCache } from './assets/lib/cache'
       onFinished: (values) => {
         console.log('login res', values)
         if (values.token) {
-          setCache(ACCESS_TOKEN, values.token)
+          setToken(values.token)
           window.location = '/'
         }
         return false // 这样可以禁掉 amis 后续的默认行为
