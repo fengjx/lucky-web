@@ -1,8 +1,43 @@
 import './amis'
-;(() => {
+import { fetchMenu } from './app'
+import { appConfig } from './assets/lib/kit'
+
+// 填充完整 schemaApi
+const fillSchemaApi = (menus) => {
+  menus.forEach((menu) => {
+    if (menu.children) {
+      fillSchemaApi(menu.children)
+    }
+    if (menu.schemaApi && !menu.schemaApi.startsWith('http')) {
+      menu.schemaApi = `${appConfig.pageURL}/${menu.schemaApi}`
+      console.log('menu.schemaApi ', menu.schemaApi)
+    }
+  })
+  return menus
+}
+
+;(async () => {
   if (!getToken()) {
     window.location = '/login'
   }
+
+  // 从服务器拉取菜单
+  const data = await fetchMenu()
+  const menus = fillSchemaApi(data.pages || [])
+  // 静态菜单
+  menus.push({
+    label: '设置',
+    url: '/settings',
+    icon: 'fa fa-server',
+    redirect: '/settings/service',
+    children: [
+      {
+        label: '服务配置',
+        url: 'service',
+        schemaApi: 'get:/pages/settings.json',
+      },
+    ],
+  })
 
   const app = {
     type: 'app',
@@ -41,58 +76,7 @@ import './amis'
         },
       ],
     },
-    pages: [
-      {
-        label: 'Home',
-        url: '/',
-        redirect: '/sys/user',
-      },
-      {
-        label: '系统',
-        children: [
-          {
-            label: '系统管理',
-            url: '/sys',
-            icon: 'fa fa-wrench',
-            children: [
-              {
-                label: '用户管理',
-                url: 'user',
-                schemaApi: `get:${appConfig.pageURL}/sys/user/index.json`,
-              },
-              {
-                label: '菜单管理',
-                url: 'menu',
-                schemaApi: `get:${appConfig.pageURL}/sys/menu/index.json`,
-              },
-              {
-                label: '字典管理',
-                url: 'dict',
-                schemaApi: `get:${appConfig.pageURL}/sys/dict/index.json`,
-              },
-              {
-                label: '配置管理',
-                url: 'config',
-                schemaApi: `get:${appConfig.pageURL}/sys/config/index.json`,
-              },
-            ],
-          },
-          {
-            label: '设置',
-            url: '/settings',
-            icon: 'fa fa-server',
-            redirect: '/settings/service',
-            children: [
-              {
-                label: '服务配置',
-                url: 'service',
-                schemaApi: 'get:/pages/settings.json',
-              },
-            ],
-          },
-        ],
-      },
-    ],
+    pages: menus,
   }
 
   let amisInstance = createAmis('#root', app, {})

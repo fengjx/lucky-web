@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getToken, setToken } from '../lib/kit'
+import { getToken, setToken } from '../kit'
 
 const apiBaseURL = import.meta.env.VITE_API_BASEURL
 
@@ -13,9 +13,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
-    }
+    config.headers['X-Token'] = getToken() || ''
     return config
   },
   (error) => {
@@ -35,10 +33,17 @@ service.interceptors.response.use(
     }
 
     const res = response.data
-    return res
+    if (res.status && res.status > 0) {
+      console.log('response err', res.msg)
+      return Promise.reject({
+        status: res.status,
+        msg: res.msg,
+      })
+    }
+    return res.data
   },
   (error) => {
-    console.log('err' + error) // for debug
+    console.log('net err' + error) // for debug
     return Promise.reject(error)
   }
 )
