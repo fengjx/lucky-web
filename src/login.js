@@ -1,5 +1,5 @@
 import './amis'
-import { getToken, setToken } from './assets/lib/kit'
+import { getToken, setToken } from './app'
 ;(() => {
   if (getToken()) {
     window.location = '/'
@@ -13,7 +13,7 @@ import { getToken, setToken } from './assets/lib/kit'
       redirect: '/',
       api: {
         method: 'post',
-        url: `${appConfig.apiBaseURL}/api/login`,
+        url: `${appConfig.apiBaseURL}/api/open/sys/login`,
       },
       onFinished: (values) => {
         console.log('login res', values)

@@ -2,18 +2,20 @@ import 'amis/sdk/sdk.css'
 import 'amis/sdk/antd.css'
 import 'amis/sdk/helper.css'
 import 'amis/sdk/iconfont.css'
-import './assets/css/base.css'
+import '../assets/css/base.css'
 
 import 'amis/sdk/sdk.js'
+import './filter'
 
-import { getToken, setToken, logout, appConfig } from './assets/lib/kit'
+import consts from '../consts'
+import { getDictOptions, getToken, setToken, logout, appConfig } from '../app'
 import { createHashHistory } from 'history'
 
 // 如果想用 browserHistory 请切换下这处代码, 其他不用变
 // const history = History.createBrowserHistory();
 const appHistory = createHashHistory()
 const match = amisRequire('path-to-regexp').match
-let amis = amisRequire('amis/embed')
+const amis = amisRequire('amis/embed')
 
 function normalizeLink(to, location = appHistory.location) {
   to = to || ''
@@ -75,23 +77,14 @@ function isCurrentUrl(to, ctx) {
   return decodeURI(pathname) === link
 }
 
+const options = getDictOptions()
+
 window.createAmis = (container, schemaJSON, props) => {
   const defaultProps = {
     location: appHistory.location,
     data: {
       // 全局数据，是受控的数据
-      options: {
-        user: [
-          {
-            label: '正常',
-            value: 'normal',
-          },
-          {
-            label: '封禁',
-            value: 'disable',
-          },
-        ],
-      },
+      options,
     },
     context: {
       API_BASEURL: appConfig.apiBaseURL,
@@ -100,7 +93,7 @@ window.createAmis = (container, schemaJSON, props) => {
   }
   const targetProps = Object.assign(defaultProps, props)
 
-  let amisInstance = amis.embed(container, schemaJSON, targetProps, {
+  const amisInstance = amis.embed(container, schemaJSON, targetProps, {
     // watchRouteChange: fn => {
     //   return history.listen(fn);
     // },
@@ -161,15 +154,15 @@ window.createAmis = (container, schemaJSON, props) => {
       headers['app'] = 'lca-ui'
       const token = getToken()
       if (token) {
-        headers['X-Token'] = token
+        headers[consts.ADMIN_TOKEN] = token
       }
       api.headers = headers
       return api
     },
     responseAdaptor: (api, payload, query, request, response) => {
       const headers = response.headers
-      if (headers && headers['x-refresh-token']) {
-        const token = headers['x-refresh-token']
+      if (headers && headers[consts.ADMIN_REFRESH_TOKEN]) {
+        const token = headers[consts.ADMIN_REFRESH_TOKEN]
         console.log('refresh token', token)
         setToken(token)
       }

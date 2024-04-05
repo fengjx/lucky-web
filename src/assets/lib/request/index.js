@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-import { getToken, setToken } from '../kit'
+import { getToken, setToken } from '../../../app'
+import consts from '../../../consts'
 
 const apiBaseURL = import.meta.env.VITE_API_BASEURL
 
@@ -13,12 +14,12 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
-    config.headers['X-Token'] = getToken() || ''
+    config.headers[consts.ADMIN_TOKEN] = getToken() || ''
     return config
   },
-  (error) => {
-    console.log(error) // for debug
-    return Promise.reject(error)
+  (e) => {
+    console.log(e) // for debug
+    return Promise.reject(e)
   }
 )
 
@@ -26,8 +27,8 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const headers = response.headers
-    if (headers && headers['x-refresh-token']) {
-      const token = headers['x-refresh-token']
+    if (headers && headers[consts.ADMIN_REFRESH_TOKEN]) {
+      const token = headers[consts.ADMIN_REFRESH_TOKEN]
       console.log('refresh token', token)
       setToken(token)
     }
@@ -42,9 +43,14 @@ service.interceptors.response.use(
     }
     return res.data
   },
-  (error) => {
-    console.log('net err' + error) // for debug
-    return Promise.reject(error)
+  (e) => {
+    if (e.response?.status == 401 && window.location.pathname != '/login') {
+      setToken('')
+      window.location = '/login'
+      return
+    }
+    console.log('net err', e) // for debug
+    return Promise.reject(e)
   }
 )
 

@@ -1,6 +1,5 @@
 import './amis'
-import { fetchMenu } from './app'
-import { appConfig } from './assets/lib/kit'
+import { appConfig, fetchMenu } from './app'
 
 // 填充完整 schemaApi
 const fillSchemaApi = (menus) => {
@@ -10,7 +9,6 @@ const fillSchemaApi = (menus) => {
     }
     if (menu.schemaApi && !menu.schemaApi.startsWith('http')) {
       menu.schemaApi = `${appConfig.pageURL}/${menu.schemaApi}`
-      console.log('menu.schemaApi ', menu.schemaApi)
     }
   })
   return menus

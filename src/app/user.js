@@ -1,12 +1,4 @@
-import { ACCESS_TOKEN, getCache, setCache } from '../cache'
-
-const apiBaseURL = import.meta.env.VITE_API_BASEURL
-const pageURL = import.meta.env.VITE_PAGE_BASEURL
-
-const appConfig = {
-  apiBaseURL,
-  pageURL,
-}
+import { ACCESS_TOKEN, getCache, setCache } from '../assets/lib/cache'
 
 export const getToken = () => {
   const token = getCache(ACCESS_TOKEN)
@@ -21,5 +13,3 @@ export const logout = () => {
   setCache(ACCESS_TOKEN, null)
   window.location = '/login'
 }
-
-export { appConfig }
