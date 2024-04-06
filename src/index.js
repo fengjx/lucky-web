@@ -1,4 +1,5 @@
 import './amis'
+import './assets/css/index.css'
 import { appConfig, fetchMenu } from './app'
 
 // 填充完整 schemaApi
@@ -25,14 +26,11 @@ const fillSchemaApi = (menus) => {
   // 静态菜单
   menus.push({
     label: '设置',
-    url: '/settings',
     icon: 'fa fa-server',
-    redirect: '/settings/service',
     children: [
       {
         label: '服务配置',
-        url: 'service',
-        schemaApi: 'get:/pages/settings.json',
+        link: '/settings',
       },
     ],
   })

@@ -1,4 +1,5 @@
 import './amis'
+import './assets/css/login.css'
 import { getToken, setToken } from './app'
 ;(() => {
   if (getToken()) {
