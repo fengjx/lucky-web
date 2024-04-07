@@ -7,6 +7,6 @@ export const fetchMenu = async () => {
   })
 }
 
-export * from './config'
 export * from './data'
 export * from './user'
+export * from './env'

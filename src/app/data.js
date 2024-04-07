@@ -1,10 +1,5 @@
 import request from '../assets/lib/request'
-import {
-  DICT_KEY,
-  SYS_CONFIG_KEY,
-  getCache,
-  setCache,
-} from '../assets/lib/cache'
+import { DICT_KEY, getCache, setCache } from '../assets/lib/cache'
 
 export const fetchInitData = async () => {
   return await request({
@@ -66,8 +61,3 @@ export const getDictOptions = () => {
   })
   return options
 }
-;(async () => {
-  const data = await fetchInitData()
-  setCache(DICT_KEY, data.dict)
-  setCache(SYS_CONFIG_KEY, data.config)
-})()

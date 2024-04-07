@@ -1,11 +1,12 @@
 import './amis'
 import './assets/css/login.css'
-import { getToken, setToken } from './app'
+import { getToken, setToken, getCurrentEnv } from './app'
 ;(() => {
   if (getToken()) {
     window.location = '/'
   }
-  let amisJSON = {
+  const env = getCurrentEnv()
+  const amisJSON = {
     type: 'page',
     body: {
       type: 'form',
@@ -14,7 +15,7 @@ import { getToken, setToken } from './app'
       redirect: '/',
       api: {
         method: 'post',
-        url: `${appConfig.apiBaseURL}/api/open/sys/login`,
+        url: `${env.apiBaseUrl}/api/open/sys/login`,
       },
       onFinished: (values) => {
         console.log('login res', values)

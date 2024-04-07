@@ -8,7 +8,13 @@ import 'amis/sdk/sdk.js'
 import './filter'
 
 import consts from '../consts'
-import { getDictOptions, getToken, setToken, logout, appConfig } from '../app'
+import {
+  getDictOptions,
+  getToken,
+  setToken,
+  logout,
+  getCurrentEnv,
+} from '../app'
 import { createHashHistory } from 'history'
 
 // 如果想用 browserHistory 请切换下这处代码, 其他不用变
@@ -80,6 +86,7 @@ function isCurrentUrl(to, ctx) {
 const options = getDictOptions()
 
 window.createAmis = (container, schemaJSON, props) => {
+  const env = getCurrentEnv()
   const defaultProps = {
     location: appHistory.location,
     data: {
@@ -87,8 +94,7 @@ window.createAmis = (container, schemaJSON, props) => {
       options,
     },
     context: {
-      API_BASEURL: appConfig.apiBaseURL,
-      PAGE_URL: appConfig.pageURL,
+      API_BASEURL: env.apiBaseUrl,
     },
   }
   const targetProps = Object.assign(defaultProps, props)
@@ -174,8 +180,6 @@ window.createAmis = (container, schemaJSON, props) => {
 }
 
 window.appHistory = appHistory
-
-window.appConfig = appConfig
 
 window.logout = logout
 

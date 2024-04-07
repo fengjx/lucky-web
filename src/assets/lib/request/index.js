@@ -1,12 +1,9 @@
 import axios from 'axios'
 
-import { getToken, setToken } from '../../../app'
+import { getToken, setToken, getCurrentEnv } from '../../../app'
 import consts from '../../../consts'
 
-const apiBaseURL = import.meta.env.VITE_API_BASEURL
-
 const service = axios.create({
-  baseURL: apiBaseURL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
 })
@@ -14,6 +11,8 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(
   (config) => {
+    const env = getCurrentEnv()
+    config.baseURL = env.apiBaseUrl
     config.headers[consts.ADMIN_TOKEN] = getToken() || ''
     return config
   },
