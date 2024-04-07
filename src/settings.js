@@ -46,21 +46,21 @@ import './assets/css/settings.css'
                 {
                   label: '环境标识',
                   type: 'input-text',
-                  name: 'a',
+                  name: 'sn',
                   className: 'input-item',
                   required: true,
                 },
                 {
                   label: '接口地址',
                   type: 'input-text',
-                  name: 'a',
+                  name: 'api',
                   className: 'input-item',
                   required: true,
                 },
                 {
                   label: 'schema 地址',
                   type: 'input-text',
-                  name: 'a',
+                  name: 'schemaApi',
                   required: true,
                 },
               ],
@@ -68,6 +68,21 @@ import './assets/css/settings.css'
           ],
         },
       ],
+      onSubmit: (data) => {
+        console.log('submit', data)
+      },
+      // onEvent: {
+      //   submit: {
+      //     actions: [
+      //       {
+      //         actionType: 'custom',
+      //         script: (context, doAction, event) => {
+      //           console.log('submit', event.data)
+      //         },
+      //       },
+      //     ],
+      //   },
+      // },
     },
   }
   let amisScoped = createAmis('#root', amisJSON, {})
