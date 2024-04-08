@@ -184,3 +184,9 @@ window.appHistory = appHistory
 window.logout = logout
 
 window.getToken = getToken
+;(() => {
+  const env = getCurrentEnv()
+  if (env.value === 'dev') {
+    window.enableAMISDebug = true
+  }
+})()

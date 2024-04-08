@@ -9,5 +9,9 @@ body,
 }
 
 .header-right {
-  float: right;
+  margin-top: 10px;
+}
+
+.antd-AppFoldBtn {
+  margin-top: -10px;
 }

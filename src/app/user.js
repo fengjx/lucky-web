@@ -1,3 +1,4 @@
+import request from '../assets/lib/request'
 import { ACCESS_TOKEN, getCache, setCache } from '../assets/lib/cache'
 
 export const getToken = () => {
@@ -12,4 +13,11 @@ export const setToken = (token) => {
 export const logout = () => {
   setCache(ACCESS_TOKEN, null)
   window.location = '/login'
+}
+
+export const fetchUserInfo = async () => {
+  return await request({
+    url: '/admin/sys/user/info',
+    method: 'get',
+  })
 }
