@@ -1,9 +1,5 @@
-# lca
+# lc-kit-web
 
-luchen-admin
-
-面向后台系统的低代码开发框架
-
-
+基于 amis + vite 开发的的低代码后台系统
 
 

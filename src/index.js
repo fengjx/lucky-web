@@ -48,12 +48,12 @@ const loadUserInfo = async () => {
 ;(async () => {
   const env = getCurrentEnv()
   if (!getToken()) {
-    window.location = '/login'
+    window.location = '/login.html'
     return
   }
   const userInfo = await loadUserInfo()
   if (!userInfo) {
-    window.location = '/login'
+    window.location = '/login.html'
     return
   }
   loadData()
@@ -65,17 +65,6 @@ const loadUserInfo = async () => {
   // 从服务器拉取菜单
   const data = await fetchMenu()
   const menus = fillSchemaApi(data.pages || [])
-  // 静态菜单
-  menus.push({
-    label: '设置',
-    icon: 'fa fa-server',
-    children: [
-      {
-        label: '服务配置',
-        link: '/settings',
-      },
-    ],
-  })
 
   const app = {
     type: 'app',

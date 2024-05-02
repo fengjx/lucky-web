@@ -12,7 +12,7 @@ export const setToken = (token) => {
 
 export const logout = () => {
   setCache(ACCESS_TOKEN, null)
-  window.location = '/login'
+  window.location = '/login.html'
 }
 
 export const fetchUserInfo = async () => {
