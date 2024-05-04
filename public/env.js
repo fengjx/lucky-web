@@ -7,7 +7,7 @@ const envList = [
   },
   {
     label: 'demo环境',
-    value: 'prod',
+    value: 'demo',
     apiBaseUrl: 'http://admin.luchen.fun',
     schemaBaseUrl: 'http://admin.luchen.fun/static/pages',
   },

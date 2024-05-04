@@ -1,3 +1,5 @@
+'use strict'
+
 import './amis'
 import './assets/css/index.css'
 import {
