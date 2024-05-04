@@ -98,11 +98,15 @@ const loadUserInfo = async () => {
                   buttons: [
                     {
                       type: 'button',
-                      label: 'UI',
+                      label: 'lc-kit',
+                      actionType: 'url',
+                      url: 'https://github.com/fengjx/lc-kit',
                     },
                     {
-                      label: '服务端',
                       type: 'button',
+                      label: 'lc-kit-web',
+                      actionType: 'url',
+                      url: 'https://github.com/fengjx/lc-kit-web',
                     },
                   ],
                 },

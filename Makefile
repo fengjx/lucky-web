@@ -18,10 +18,13 @@ build: build-web build-go
 build-web:
 	pnpm i
 	pnpm run build
-	cp -r dist server/ui
+	rm -rf server/ui
+	mv dist server/ui
 
 build-go:
 	@rm -rf ${DIST_PATH}
+	@mkdir -p ${DIST_PATH}
+	@cp -r server/ui ${DIST_PATH}/
 	@cd server && \
 	go mod tidy && \
 	$(foreach n, $(os-archs), \

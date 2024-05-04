@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   # 构建工作
-  build:
+  build-webapp:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -51,11 +51,11 @@ jobs:
           path: dist
 
   # 部署工作
-  deploy:
+  deploy-gh-pages:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+    needs: build-webapp
     runs-on: ubuntu-latest
     name: Deploy
     steps:
