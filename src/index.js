@@ -100,15 +100,15 @@ const loadUserInfo = async () => {
                   buttons: [
                     {
                       type: 'button',
-                      label: 'lc-kit',
+                      label: 'lucky',
                       actionType: 'url',
-                      url: 'https://github.com/fengjx/lc-kit',
+                      url: 'https://github.com/fengjx/lucky',
                     },
                     {
                       type: 'button',
-                      label: 'lc-kit-web',
+                      label: 'lucky-web',
                       actionType: 'url',
-                      url: 'https://github.com/fengjx/lc-kit-web',
+                      url: 'https://github.com/fengjx/lucky-web',
                     },
                   ],
                 },
