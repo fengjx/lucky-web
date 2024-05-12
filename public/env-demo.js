@@ -10,3 +10,4 @@ const envList = [
 console.log('envList', envList)
 
 window.envList = envList
+window.defaultEnv = 'demo'
