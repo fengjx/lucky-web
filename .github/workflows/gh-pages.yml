@@ -45,6 +45,7 @@ jobs:
           pnpm run build
           touch dist/.nojekyll
           echo 'admin.luchen.fun' > dist/CNAME
+          mv public/env-demo.js dist/env.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
