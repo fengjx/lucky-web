@@ -58,7 +58,7 @@ const loadUserInfo = async () => {
     window.location = '/login.html'
     return
   }
-  loadData()
+  await loadData()
   // 定时同步
   setInterval(async () => {
     loadData()
