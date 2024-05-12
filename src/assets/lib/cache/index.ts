@@ -12,7 +12,7 @@ interface DataWrap {
 export const getEnv = () => {
   const key = prefix + ENV_KEY
   const env = localStorage.getItem(key)
-  return env || 'dev'
+  return env
 }
 
 export const setEnv = (env) => {
