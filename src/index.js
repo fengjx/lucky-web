@@ -75,7 +75,7 @@ const loadUserInfo = async () => {
       envList,
       env,
     },
-    brandName: 'LuchenAdmin',
+    brandName: 'lucky',
     logo: '/logo.png',
     header: {
       type: 'grid',
