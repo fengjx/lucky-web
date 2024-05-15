@@ -2,8 +2,8 @@ const envList = [
   {
     label: 'demo环境',
     value: 'demo',
-    apiBaseUrl: 'http://8.134.143.210:8080',
-    schemaBaseUrl: 'http://8.134.143.210:8080/static/pages',
+    apiBaseUrl: 'http://lucky.fengjx.com',
+    schemaBaseUrl: 'http://lucky.fengjx.com/static/pages',
   },
 ]
 
