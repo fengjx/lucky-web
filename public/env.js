@@ -13,7 +13,20 @@ const envList = [
   },
 ]
 
+const defaultEnv = 'dev'
+const envKey = 'lucky.env'
+
 console.log('envList', envList)
 
+const getEnv = () => {
+  const env = localStorage.getItem(envKey) || defaultEnv
+  return env
+}
+
+const setEnv = (env) => {
+  localStorage.setItem(envKey, env)
+}
+
 window.envList = envList
-window.defaultEnv = 'dev'
+window.getEnv = getEnv
+window.setEnv = setEnv

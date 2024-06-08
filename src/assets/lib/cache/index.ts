@@ -1,23 +1,11 @@
 export * from './keys'
 
-const prefix = 'LCA_'
-const ENV_KEY = 'env'
+const prefix = 'lucky.'
 
 // 缓存时间包装
 interface DataWrap {
   data: any
   expireAt: number
-}
-
-export const getEnv = () => {
-  const key = prefix + ENV_KEY
-  const env = localStorage.getItem(key)
-  return env
-}
-
-export const setEnv = (env) => {
-  const key = prefix + ENV_KEY
-  localStorage.setItem(key, env)
 }
 
 const buildKey = (key: string): any => {
