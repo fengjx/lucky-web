@@ -7,7 +7,7 @@ const envList = [
   },
 ]
 
-const defaultEnv = 'dev'
+const defaultEnv = 'demo'
 const envKey = 'lucky.env'
 
 console.log('envList', envList)
