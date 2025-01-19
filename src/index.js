@@ -38,8 +38,7 @@ const loadData = async () => {
 }
 
 const loadUserInfo = async () => {
-  const res = await fetchUserInfo()
-  const userInfo = res?.user_info
+  const userInfo = await fetchUserInfo()
   if (!userInfo) {
     return null
   }

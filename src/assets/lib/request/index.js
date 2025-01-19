@@ -31,16 +31,7 @@ service.interceptors.response.use(
       console.log('refresh token', token)
       setToken(token)
     }
-
-    const res = response.data
-    if (res.status && res.status > 0) {
-      console.log('response err', res.msg)
-      return Promise.reject({
-        status: res.status,
-        msg: res.msg,
-      })
-    }
-    return res.data
+    return response.data
   },
   (e) => {
     if (e.response?.status == 401 && window.location.pathname != '/login') {
