@@ -6,6 +6,9 @@ import consts from '../../../consts'
 const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 // request interceptor
@@ -31,16 +34,7 @@ service.interceptors.response.use(
       console.log('refresh token', token)
       setToken(token)
     }
-
-    const res = response.data
-    if (res.status && res.status > 0) {
-      console.log('response err', res.msg)
-      return Promise.reject({
-        status: res.status,
-        msg: res.msg,
-      })
-    }
-    return res.data
+    return response.data
   },
   (e) => {
     if (e.response?.status == 401 && window.location.pathname != '/login') {

@@ -3,7 +3,8 @@ import request from '../assets/lib/request'
 export const fetchMenu = async () => {
   return await request({
     url: '/admin/sys/menu/fetch',
-    method: 'get',
+    method: 'GET',
+    data: {},
   })
 }
 

@@ -4,7 +4,8 @@ import { DICT_KEY, getCache, setCache } from '../assets/lib/cache'
 export const fetchInitData = async () => {
   return await request({
     url: '/api/open/app/data',
-    method: 'get',
+    method: 'GET',
+    data: {},
   })
 }
 
