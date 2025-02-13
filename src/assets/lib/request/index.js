@@ -6,6 +6,9 @@ import consts from '../../../consts'
 const service = axios.create({
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000, // request timeout
+  headers: {
+    'Content-Type': 'application/json',
+  },
 })
 
 // request interceptor

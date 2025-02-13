@@ -18,7 +18,6 @@ export const logout = () => {
 export const fetchUserInfo = async () => {
   return await request({
     url: '/admin/sys/user/info',
-    method: 'GET',
     data: {},
   })
 }
